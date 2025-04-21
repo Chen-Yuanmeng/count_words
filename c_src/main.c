@@ -14,7 +14,7 @@ typedef struct WordNode {
 
 WordNode *hashTable[HASH_SIZE] = {NULL};
 
-// 哈希函数
+// hash function
 unsigned int hash(const char *str) {
     unsigned int h = 0;
     while (*str) {
@@ -24,7 +24,7 @@ unsigned int hash(const char *str) {
     return h % HASH_SIZE;
 }
 
-// 插入或更新单词
+// insert or update words 
 void insertWord(const char *word) {
     if (strlen(word) == 0) return;
     unsigned int idx = hash(word);
@@ -36,7 +36,7 @@ void insertWord(const char *word) {
         }
         node = node->next;
     }
-    // 新节点
+    // new point
     WordNode *newNode = (WordNode *)malloc(sizeof(WordNode));
     newNode->word = strdup(word);
     newNode->count = 1;
@@ -44,7 +44,7 @@ void insertWord(const char *word) {
     hashTable[idx] = newNode;
 }
 
-// 清理哈希表
+// clear hash table
 void freeHashTable() {
     for (int i = 0; i < HASH_SIZE; ++i) {
         WordNode *node = hashTable[i];
@@ -54,11 +54,11 @@ void freeHashTable() {
             free(tmp->word);
             free(tmp);
         }
-        hashTable[i] = NULL; // 重置指针
+        hashTable[i] = NULL; // reset pointer
     }
 }
 
-// 处理一行文本
+
 void processLine(char *line) {
     char word[MAX_WORD_LEN];
     int j = 0;
@@ -78,12 +78,23 @@ void processLine(char *line) {
         insertWord(word);
     }
 }
-
-// 封装函数：处理文件，返回最高频单词，次数通过 count_out 输出
+/**
+ * Processes a file to determine the most frequent word.
+ * 
+ * This function reads the content of the specified file, analyzes the word frequencies,
+ * and identifies the word that appears most frequently. The frequency of this word is
+ * returned via the count_out parameter. *
+ * 
+ * @param filepath The path to the file to be processed.
+ * @param count_out A pointer to an integer where the function will store the frequency
+ *                  of the most frequent word.
+ * @return The most frequent word in the file as a dynamically allocated string.
+ *         The caller is responsible for freeing the memory.
+ */
 char* get_most_frequent_word(const char* filename, int* count_out) {
     FILE *fp = fopen(filename, "r");
     if (!fp) {
-        perror("无法打开文件");
+        perror("Can not open file");
         return NULL;
     }
 
@@ -113,14 +124,14 @@ char* get_most_frequent_word(const char* filename, int* count_out) {
     return mostWord;
 }
 
-// 主函数只负责调用和打印
+
 int main() {
     int count = 0;
     char *word = get_most_frequent_word("Gone_with_the_wind.txt", &count);
     if (word) {
-        printf("出现次数最多的单词是 \"%s\"，出现了 %d 次。\n", word, count);
+        printf("The most frequent word is \"%s\", which appeared %d times.\n", word, count);
     } else {
-        printf("未找到任何单词或文件无法读取。\n");
+        printf("Could not find any words or could not read the file.\n");
     }
     freeHashTable();
     return 0;
