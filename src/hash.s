@@ -9,7 +9,8 @@ hash:
 	mv		t0, a0			# t0 = a0
 	li		t6, 0 			# t6 = 0 (h)
 	li 		t5, 31 			# t5 = 31
-
+	
+	.local while_loop
 while_loop:
 	lb		t4, 0(t0) 			# byte
 	beqz	t4, end_while		# if t4 == 0, end while loop
@@ -19,13 +20,18 @@ while_loop:
 	li		t2, 90
 	bgt		t4, t2, end_lower
 	
+	.local lower
 lower:
 	addi	t4, t4, 32			# t4 = t4 + 32
+	
+	.local end_lower
 end_lower:
 	mul		t6, t6, t5
 	add		t6, t6, t4
 	addi	t0, t0, 1			# ++str
 	j		while_loop
+
+	.local end_while
 end_while:
 	li		t5, 10007
 	remu	a0, t6, t5			# return t6 % t5
