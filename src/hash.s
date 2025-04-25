@@ -1,5 +1,6 @@
 	.section .text
 	.globl hash
+    .type hash, @function
 hash:
 	addi	sp, sp, -16
 	sd		ra, 8(sp)
