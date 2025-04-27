@@ -17,7 +17,7 @@ get_most_frequent_word:
 	la		a1, msg1			# "r"		
 	call	fopen				# fopen
 
-	bnez		a0, if_end
+	bnez	a0, if_end
 
 	la		a0, msg2
 	call	perror
@@ -62,7 +62,7 @@ while:
 	.local while_end
 while_end:
 	mv		a0, t0
-	call		fclose
+	call	fclose
 
 	li		t1, 0				# mostWord = NULL
 	li		t2, 0				# maxcount = 0
@@ -82,7 +82,7 @@ for_loop:
 	.local while_loop
 while_loop:
 	
-	beqz		t6, while_loop_end
+	beqz	t6, while_loop_end
 	lw		t0, 8(t6)			# count
 	bleu	t0, t2, if_end1
 	mv		t2, t0
@@ -96,7 +96,7 @@ if_end1:
 	.local while_loop_end
 while_loop_end:
 
-	addi		t3, t3, 1
+	addi	t3, t3, 1
 	j		for_loop
 	.local for_loop_end
 for_loop_end:
