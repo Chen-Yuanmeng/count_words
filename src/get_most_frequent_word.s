@@ -1,7 +1,9 @@
-	.section .text
     .section .rodata
+	.align 3
     msg1: .asciz "r"
+	.align 3
     msg2: .asciz "Can not open file\n"
+	.section .text
 	.globl get_most_frequent_word
     .type get_most_frequent_word, @function
 get_most_frequent_word:
