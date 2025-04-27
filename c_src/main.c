@@ -125,9 +125,14 @@ char* get_most_frequent_word(const char* filename, int* count_out) {
 }
 
 
-int main() {
+int main(int argc, char *argv[]) {
+    if (argc != 2) {
+        fprintf(stderr, "Usage: %s <filename>\n", argv[0]);
+        return 1;
+    }
+
     int count = 0;
-    char *word = get_most_frequent_word("Gone_with_the_wind.txt", &count);
+    char *word = get_most_frequent_word(argv[1], &count);
     if (word) {
         printf("The most frequent word is \"%s\", which appeared %d times.\n", word, count);
     } else {
